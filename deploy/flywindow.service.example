@@ -1,0 +1,23 @@
+# Linux systemd example. Create a dedicated flywindow user and install in /opt/flywindow.
+# Verify Node >=22.12 and the executable path with: command -v node
+[Unit]
+Description=Flywindow online paragliding planner
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=flywindow
+Group=flywindow
+WorkingDirectory=/opt/flywindow
+ExecStart=/usr/bin/node /opt/flywindow/server/index.mjs
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/flywindow/data
+[Install]
+WantedBy=multi-user.target

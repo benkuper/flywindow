@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Online paragliding planning: nearby sites, usable wind sectors, forecasts, observations and linked landings.">
+  <meta name="theme-color" content="#111e27"><title>Flywindow · Find your flying window</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css"><link rel="stylesheet" href="./theme.css"><link rel="stylesheet" href="./layout.css"><link rel="stylesheet" href="./day-view.css">
+</head>
+<body>
+  <a class="skip-link" href="#site-list">Skip to site list</a>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Flywindow home"><span class="brand-symbol"><svg viewBox="0 0 40 40" fill="none"><path d="M5 20Q20 0 35 20M5 20q15-8 30 0M8 18l12 16 12-16M20 34V19" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span><span>flywindow<small>YOUR NEXT FLYING WINDOW</small></span></a>
+    <div class="area-heading"><div class="area-copy"><h1 id="area-name">Find your flying window.</h1><p id="area-meta">Worldwide coverage, nearby by default. Allow location access or search a place.</p></div><label class="radius-control"><span>Radius</span><select id="radius"><option value="25">25 km</option><option value="50" selected>50 km</option><option value="100">100 km</option><option value="200">200 km</option></select></label></div>
+    <form id="search-form" class="search" autocomplete="off"><label for="place-search" class="sr-only">Search a place worldwide or enter latitude, longitude</label><span class="search-icon" id="search-icon"></span><input id="place-search" name="place" placeholder="Search anywhere, or enter lat, lon" maxlength="100"><button type="submit" class="search-submit">Search</button><div id="search-results" class="search-results" hidden></div></form>
+    <div class="header-actions"><button id="locate-button" class="button locate-button" title="Use your current location"></button><button id="refresh-button" class="icon-button" aria-label="Refresh data"></button><button id="settings-button" class="icon-button" aria-label="Settings and provider status"></button><button class="icon-button" data-action="help" aria-label="How to read Flywindow" title="How to read Flywindow"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 9a3 3 0 1 1 5 2c-2 1-2 2-2 4m0 3v1"/></svg></button></div>
+    <div class="planning-bar" aria-label="Forecast day and time"><div id="day-tabs" class="day-tabs" aria-label="Choose forecast day"></div><div class="timebar"><div class="time-label"><span id="clock-icon"></span><strong id="selected-time">—</strong><span id="timezone">Local forecast time</span></div><input type="range" id="time-slider" aria-label="Forecast hour" min="0" max="23" value="12" disabled><div id="slider-endpoints" class="slider-endpoints"><span>00:00</span><span>23:00</span></div><button id="now-button" class="text-button">Now</button></div></div>
+  </header>
+  <div id="test-banner" class="test-banner" hidden>TEST DATA — automated test environment. No real forecast or site assessment.</div>
+  <div id="notice" class="notice" role="status" hidden></div>
+  <main>
+    <section class="workspace" id="workspace">
+      <aside class="site-sidebar" aria-label="Nearby takeoffs"><div class="sidebar-heading"><h2>Nearby takeoffs <span id="site-count">0</span></h2><div class="view-switch"><button data-view="list" aria-label="List view">List</button><button data-view="map" aria-label="Map view">Map</button></div><button id="sidebar-toggle" class="icon-button sidebar-toggle" data-action="toggle-sidebar" aria-label="Collapse nearby takeoffs" aria-expanded="true" aria-controls="sidebar-content" title="Collapse nearby takeoffs"></button></div><div id="sidebar-content" class="sidebar-content"><div class="site-filters"><select id="status-filter" aria-label="Filter site status"><option value="all">All conditions</option><option value="match">Weather matches</option><option value="caution">Caution</option><option value="outside">Outside filters</option><option value="unknown">Not assessed</option></select><button id="favourites-filter" class="icon-button" aria-label="Show favourites only" aria-pressed="false"></button><select id="sort-filter" aria-label="Sort sites"><option value="distance">Nearest</option><option value="status">Conditions</option></select></div><div id="load-progress" class="load-progress" role="status"></div><div id="site-list" class="site-list" tabindex="-1"></div><div id="source-summary" class="source-summary"></div></div></aside>
+      <section class="map-panel" aria-label="Site map"><div id="map" class="map"></div><div class="map-top"><button id="search-area" class="button" hidden>Search this map area</button><div class="map-layers"><button id="wind-layer" class="layer-button" aria-pressed="false"></button><label class="wind-density" for="wind-density">Arrows <select id="wind-density" aria-label="Wind arrow density"><option value="4">Sparse</option><option value="6">Medium</option><option value="8">Dense</option></select></label><button id="station-layer" class="layer-button" aria-pressed="true"></button></div></div><div class="map-legend"><span><i class="legend-dot match"></i>Weather match</span><span><i class="legend-dot caution"></i>Caution</span><span><i class="legend-dot outside"></i>Outside</span><span><i class="legend-dot unknown"></i>Unknown</span><small>Wedges = usable wind FROM / arrows = flow / site wind in km/h / zoom resamples 10 m model wind, not model resolution</small></div><div id="map-info" class="map-info" hidden></div><button id="mobile-list" class="button mobile-map-button" data-view="list">View site list</button></section>
+      <aside id="detail" class="detail-panel" aria-label="Selected site briefing"></aside>
+    </section>
+  </main>
+  <dialog id="settings-dialog" aria-label="Settings"><div id="settings-content"></div></dialog>
+  <dialog id="help-dialog" aria-label="How to read Flywindow"><div id="help-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p>This live map dashboard requires JavaScript. Enable it to retrieve forecasts and sites.</p></noscript>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

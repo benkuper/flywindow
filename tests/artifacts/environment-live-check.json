@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-09-13T14:13:36.030Z",
+  "coordinates": {
+    "lat": 45.9,
+    "lon": 6.2
+  },
+  "mode": "Live configured providers; fresh temporary cache",
+  "checks": [
+    {
+      "name": "Surface forecast",
+      "state": "FAIL",
+      "message": "Open-Meteo surface could not be reached (EAI_AGAIN).",
+      "elapsedMs": 59
+    },
+    {
+      "name": "Forecast sounding",
+      "state": "FAIL",
+      "message": "Open-Meteo sounding could not be reached (TimeoutError).",
+      "elapsedMs": 2007
+    },
+    {
+      "name": "Site catalogue",
+      "state": "FAIL",
+      "message": "ParaglidingEarth could not be reached (TimeoutError). | OpenStreetMap / Overpass could not be reached (EAI_AGAIN).",
+      "elapsedMs": 3006
+    },
+    {
+      "name": "Worldwide geocoding",
+      "state": "FAIL",
+      "message": "Open-Meteo geocoding could not be reached (TimeoutError).",
+      "elapsedMs": 2003
+    },
+    {
+      "name": "FFVL observations",
+      "state": "WARN",
+      "message": "FFVL station catalogue could not be reached (TimeoutError).",
+      "elapsedMs": 2004
+    }
+  ],
+  "providers": {
+    "Open-Meteo surface": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:36.084Z",
+      "message": "Open-Meteo surface could not be reached (EAI_AGAIN).",
+      "host": "api.open-meteo.com"
+    },
+    "Open-Meteo sounding": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:38.093Z",
+      "message": "Open-Meteo sounding could not be reached (TimeoutError).",
+      "host": "api.open-meteo.com"
+    },
+    "ParaglidingEarth": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:40.100Z",
+      "message": "ParaglidingEarth could not be reached (TimeoutError).",
+      "host": "paraglidingearth.com"
+    },
+    "OpenStreetMap / Overpass": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:41.101Z",
+      "message": "OpenStreetMap / Overpass could not be reached (EAI_AGAIN).",
+      "host": "overpass-api.de"
+    },
+    "Open-Meteo geocoding": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:43.105Z",
+      "message": "Open-Meteo geocoding could not be reached (TimeoutError).",
+      "host": "geocoding-api.open-meteo.com"
+    },
+    "FFVL station catalogue": {
+      "state": "error",
+      "lastError": "2026-09-13T14:13:45.108Z",
+      "message": "FFVL station catalogue could not be reached (TimeoutError).",
+      "host": "data.ffvl.fr"
+    }
+  },
+  "ok": false
+}

@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Flywindow: check",
+      "type": "shell",
+      "command": "npm run check",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Flywindow: start",
+      "type": "shell",
+      "command": "npm start",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Flywindow: live diagnostic",
+      "type": "shell",
+      "command": "npm run doctor",
+      "problemMatcher": []
+    }
+  ]
+}

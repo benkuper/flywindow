@@ -1,0 +1,204 @@
+/* One compact header for location, search, forecast day and hour. */
+.topbar {
+  display: grid;
+  grid-template-columns: auto auto minmax(160px, 1fr) auto;
+  grid-template-rows: 48px auto;
+  align-items: center;
+  column-gap: 13px;
+  row-gap: 0;
+  height: auto;
+  min-height: 0;
+  padding: 0 14px;
+}
+.topbar .brand { grid-column: 1; grid-row: 1; }
+.topbar .area-heading {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+}
+.topbar .area-copy { display: block; min-width: 0; }
+.topbar .area-heading h1 {
+  max-width: 155px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.2;
+}
+.topbar .area-heading p {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.topbar .radius-control { flex-direction: row; align-items: center; gap: 5px; }
+.topbar .radius-control span { font-size: 9px; }
+.topbar .radius-control select { min-width: 70px; padding: 5px 20px 5px 6px; font-size: 10px; }
+.topbar .search { grid-column: 3; grid-row: 1; width: 100%; max-width: none; }
+.topbar .header-actions { grid-column: 4; grid-row: 1; }
+.topbar .planning-bar {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  align-items: center;
+  gap: 11px;
+  padding: 4px 0 5px;
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+  min-width: 0;
+}
+.topbar .day-tabs { min-width: 0; }
+.topbar .day-tab { min-height: 36px; padding: 4px 7px; }
+.topbar .day-tab > small { font-size: 7px; }
+.topbar .timebar {
+  display: grid;
+  grid-template-columns: auto minmax(40px, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 30px;
+  margin: 0;
+}
+.topbar .time-label { min-width: 0; white-space: nowrap; }
+.topbar #timezone { display: none; }
+.topbar #time-slider { min-width: 0; margin: 0; }
+.topbar #now-button { margin: 0; }
+
+/* The briefing opens over the map. A map strip remains visible beside Day view. */
+.workspace {
+  --sidebar-width: 275px;
+  --map-peek: 190px;
+  --detail-width: 415px;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--detail-width);
+  position: relative;
+  transition: grid-template-columns .42s cubic-bezier(.2, .8, .2, 1);
+}
+.workspace .map-panel { grid-column: 2; display: block; }
+.workspace .detail-panel {
+  position: relative;
+  grid-column: 3;
+  inset: auto;
+  display: flex;
+  width: auto;
+  max-width: none;
+  z-index: 15;
+  box-shadow: -14px 0 34px #0611159c;
+  transition: box-shadow .42s ease;
+}
+.workspace.day-view { grid-template-columns: var(--sidebar-width) var(--map-peek) minmax(0, 1fr); }
+.workspace.day-view .map-panel { display: block; }
+.workspace.day-view .detail-panel {
+  position: relative;
+  grid-column: 3;
+  inset: auto;
+  width: auto;
+  box-shadow: -22px 0 44px #061115b8;
+  border-left: 1px solid #508e79;
+}
+.workspace.day-view .map-top,
+.workspace.day-view .map-legend { display: none; }
+.workspace .detail-panel.open { animation: briefing-enter .26s ease-out both; }
+@keyframes briefing-enter {
+  from { transform: translateX(32px); opacity: .45; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Keep the site list available as a narrow rail when collapsed. */
+.site-sidebar { min-width: 0; z-index: 16; }
+.sidebar-content { display: flex; flex: 1; flex-direction: column; min-height: 0; overflow: hidden; }
+.sidebar-content[hidden] { display: none !important; }
+.sidebar-toggle { width: 27px; height: 27px; border: 1px solid #38515b; background: #1b3038; }
+.sidebar-toggle .icon { width: 15px; height: 15px; transform: rotate(180deg); transition: transform .3s; }
+.workspace.sidebar-collapsed { --sidebar-width: 42px; }
+.sidebar-collapsed .sidebar-heading { justify-content: center; padding: 8px 4px; }
+.sidebar-collapsed .sidebar-heading h2,
+.sidebar-collapsed .view-switch { display: none; }
+.sidebar-collapsed .sidebar-toggle .icon { transform: rotate(0); }
+.sounding-chart .chart-label { font-size: 13px; fill: #abc4c4; }
+.sounding-chart .chart-unit { font-size: 11px; fill: #abc4c4; }
+
+@media (max-width: 1449px) {
+  .workspace { --sidebar-width: 250px; --map-peek: 155px; --detail-width: 0px; }
+  .workspace.detail-open { --detail-width: 425px; }
+  .workspace .detail-panel { display: none; }
+  .workspace .detail-panel.open { display: flex; }
+  .workspace.day-view .detail-panel { display: flex; }
+}
+@media (max-width: 1050px) {
+  .topbar { column-gap: 8px; }
+  .topbar .brand { font-size: 20px; }
+  .topbar .area-heading h1 { max-width: 120px; }
+  .topbar .radius-control span { display: none; }
+  .workspace { --sidebar-width: 220px; --map-peek: 90px; }
+}
+@media (max-width: 850px) {
+  .topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: 40px 35px auto;
+  }
+  .topbar .brand { grid-column: 1; grid-row: 1; }
+  .topbar .area-heading { grid-column: 2; grid-row: 1; }
+  .topbar .header-actions { grid-column: 3; grid-row: 1; }
+  .topbar .search { grid-column: 1 / -1; grid-row: 2; }
+  .topbar .planning-bar { grid-column: 1 / -1; grid-row: 3; }
+  .workspace .detail-panel,
+  .workspace.day-view .detail-panel {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    z-index: 50;
+  }
+  .workspace.day-view .detail-panel { animation: day-enter .32s ease-out both; }
+  .workspace,
+  .workspace.day-view { grid-template-columns: var(--sidebar-width) minmax(0, 1fr) 0px; }
+  @keyframes day-enter {
+    from { transform: translateX(22%); opacity: .6; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+}
+@media (max-width: 680px) {
+  .topbar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: 40px 33px auto;
+    gap: 0 6px;
+    padding: 0 9px;
+  }
+  .topbar .brand { font-size: 17px; }
+  .topbar .area-heading { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .topbar .area-heading h1 { max-width: 110px; font-size: 11px; }
+  .topbar .radius-control select { min-width: 62px; padding: 2px 18px 2px 4px; font-size: 9px; }
+  .topbar .search { height: 29px; }
+  .topbar .planning-bar { grid-template-columns: minmax(0, 1fr); gap: 3px; padding: 3px 0 4px; }
+  .topbar .day-tab { min-height: 34px; }
+  .topbar .timebar { min-height: 25px; }
+  .workspace { display: block; --sidebar-width: 100%; }
+  .workspace .site-sidebar { height: 100%; }
+  .workspace .map-panel { display: none; height: 100%; }
+  .workspace.mobile-map .map-panel,
+  .workspace.sidebar-collapsed .map-panel { display: block; }
+  .workspace.mobile-map .site-sidebar { display: none; }
+  .workspace.sidebar-collapsed:not(.mobile-map) .site-sidebar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 42px;
+    height: 100%;
+  }
+  .workspace.day-view .detail-panel { position: fixed; inset: 0; width: 100%; }
+}
+@media (max-width: 370px) {
+  .topbar .brand > span:last-child { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace, .workspace .detail-panel, .sidebar-toggle .icon { transition: none; }
+  .workspace .detail-panel.open, .workspace.day-view .detail-panel { animation: none; }
+}
