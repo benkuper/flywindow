@@ -1,5 +1,19 @@
 # Verification record — 2026-09-13
 
+This section records the original fixture-based verification. The deployment and
+current checks below supersede its earlier "no public server" status.
+
+## Current deployment — 2026-09-14
+
+The Plesk installation at `https://www.goldengeek.org/tools/flywindow/` was
+updated with `npm run deploy -- --with-ui-tests`. All 50 Node checks and 49
+synthetic browser checks passed. The deployment script backed up the previous
+private application files, restarted its tracked Node process, then matched the
+live HTTPS assets against the local release. A live browser loaded the page with
+no JavaScript errors or page overflow. The production API returned health OK,
+168 forecast hours, and 20 nearby sites for the Annecy-area smoke-test location.
+This verifies service operation, not forecast accuracy or flight safety.
+
 ## What passed
 
 **44 Node tests passed, zero failures**, using Node 22.16.0. `npm run check`

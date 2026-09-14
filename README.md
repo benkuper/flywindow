@@ -96,12 +96,32 @@ and proxies all requests to Node. Do not upload server code, `.env`, or cache
 files into `httpdocs`.
 
 The private app's `.env` needs `NODE_ENV=production`, `HOST=127.0.0.1`, and
-`PORT=38321`. `deploy/plesk-ensure.sh` starts the process if its health check
-fails; a per-minute user cron entry runs this script after crashes or reboots.
+`PORT=38321`. The live `flywindow-app/ensure-running.sh` starts the process if
+its health check fails; a per-minute user cron entry runs it after crashes or reboots.
 `ENABLE_FFVL=false` is set because the current public FFVL endpoints require
 an API key; forecasts, sites, and place search remain enabled.
-After updating the private source files, restart the process and check both
-`/tools/flywindow/` and `/tools/flywindow/api/health` over HTTPS.
+For repeatable updates from this checkout, the deploy command uses the existing
+`.vscode/sftp.json` by default. This file is ignored by Git. It reads the password
+locally, verifies the SSH host key, uploads to the **private** app directory (not
+the SFTP setting's public `remotePath`), and executes the restart over SSH. Install
+the local transport dependency once, then deploy with one command:
+
+```powershell
+python -m pip install -r requirements-deploy.txt
+npm run deploy
+```
+
+The command runs the source and API checks, uploads only application files,
+keeps `.env`, cache, custom data and logs on the server, saves the prior code under
+`flywindow-app/.deploy-backups/`, restarts the tracked Node process, and compares
+the live HTTPS assets with the local release. A failed server restart restores the
+prior code. Use `npm run deploy -- --with-ui-tests` for browser checks too, or
+`npm run deploy -- --dry-run` to package and check without contacting the server.
+If you prefer SSH key authentication, copy `.deploy.local.example.json` to
+`.deploy.local.json` and fill in `target`, or pass `--target user@host`, `--port
+22`, and `--identity PATH`. That overrides the VS Code SFTP settings. Verify the
+server's SSH host key before the first deployment; deployment requires an already
+trusted host key.
 
 ### Docker with your existing reverse proxy
 

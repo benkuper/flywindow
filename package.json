@@ -8,7 +8,8 @@
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs && npm test",
     "doctor": "node scripts/doctor.mjs",
-    "test:ui": "python scripts/test_ui.py"
+    "test:ui": "python scripts/test_ui.py",
+    "deploy": "node scripts/deploy-plesk.mjs"
   },
   "license": "MIT"
 }
