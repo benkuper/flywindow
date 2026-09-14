@@ -9,3 +9,4 @@ tests/artifacts/*.log
 .DS_Store
 __pycache__/
 .venv/
+.vscode/sftp.json
